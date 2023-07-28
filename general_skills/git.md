@@ -15,6 +15,7 @@
     ```
  3. git clone到本地
     `git clone https://github.com/yangjinhui2936/AvCodec.git`
+    `git remote add origon https://github.com/yangjinhui2936/AvCodec.git`
  4. 设置ssh key
     ssh-keygen -t rsa -C "邮箱地址"
     将~/.ssh 目录下id_rsa id_rsa.pub 内容复制到 github中是SSH and GPG keys 中，需要新建New SSH key

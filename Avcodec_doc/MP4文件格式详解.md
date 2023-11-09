@@ -24,7 +24,7 @@ MP4文件中的所有数据都装在box（QuickTime中为atom）中，也就是�
 
 在本文中，我们不讨论涉及hint的内容，只关注包含媒体数据的本地MP4文件。下图为一个典型的MP4文件的结构树。
 
-![Alt text](image-5.png)
+![Alt text ](img/image-5.png)
 
 **2、Box**
 
@@ -40,14 +40,14 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “ftyp” body依次包括1个32位的major brand（4个字符），1个32位的minor version（整数）和1个以32位（4个字符）为单位元素的数组compatible brands。这些都是用来指示文件应用级别的信息。该box的字节实例如下：
 
-![Alt text](image-6.png)
+![Alt text ](img/image-6.png)
 4、Movie Box（moov）
 
 该box包含了文件媒体的metadata信息，“moov”是一个container box，具体内容信息由子box诠释。同File Type Box一样，该box有且只有一个，且只被包含在文件层。一般情况下，“moov”会紧随“ftyp”出现。
 
 一般情况下（限于篇幅，本文只讲解常见的MP4文件结构），“moov”中会包含1个“mvhd”和若干个“trak”。其中“mvhd”为header box，一般作为“moov”的第一个子box出现（对于其他container box来说，header box都应作为首个子box出现）。“trak”包含了一个track的相关信息，是一个container box。下图为部分“moov”的字节实例，其中红色部分为box header，绿色为“mvhd”，黄色为一部分“trak”。
 
-![Alt text](image-7.png)
+![Alt text ](img/image-7.png)
 **4.1 Movie Header Box（mvhd）**
 
 “mvhd”结构如下表。
@@ -71,7 +71,7 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “mvhd”的字节实例如下图，各字段已经用颜色区分开：
 
-![Alt text](image-8.png)
+![Alt text ](img/image-8.png)
 
 **4.2 Track Box（trak）**
 
@@ -79,7 +79,7 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “trak”的部分字节实例如下图，其中黄色为“trak”box的头，绿色为“tkhd”，蓝色为“edts”（一个可选box），红色为一部分“mdia”。
 
-![Alt text](image-9.png)
+![Alt text ](img/image-9.png)
 
 **4.2.1 Track Header Box（tkhd）**
 
@@ -107,12 +107,12 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “tkhd”的字节实例如下图，各字段已经用颜色区分开：
 
-![Alt text](image-10.png)
+![Alt text ](img/image-10.png)
 **4.2.2 Media Box（mdia）**
 
 “mdia”也是个container box，其子box的结构和种类还是比较复杂的。先来看一个“mdia”的实例结构树图。
 
-![Alt text](image-11.png)
+![Alt text ](img/image-11.png)
 
 总体来说，“mdia”定义了track媒体类型以及sample数据，描述sample信息。一般“mdia”包含一个“mdhd”，一个“hdlr”和一个“minf”，其中“mdhd”为media header box，“hdlr”为handler reference box，“minf”为media information box。下面依次看一下这几个box的结构。
 
@@ -135,7 +135,7 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “mdhd”的字节实例如下图，各字段已经用颜色区分开：
 
-![Alt text](image-12.png)
+![Alt text ](img/image-12.png)
 
 **4.2.2.2 Handler Reference Box（hdlr）**
 
@@ -154,7 +154,7 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 “hdlr”的字节实例如下图，各字段已经用颜色区分开：
 
-![Alt text](image-13.png)
+![Alt text ](img/image-13.png)
 **4.2.2.3 Media Information Box（minf）**
 
 “minf”存储了解释track媒体数据的handler-specific信息，media handler用这些信息将媒体时间映射到媒体数据并进行处理。“minf”中的信息格式和内容与媒体类型以及解释媒体数据的media handler密切相关，其他media handler不知道如何解释这些信息。“minf”是一个container box，其实际内容由子box说明。
@@ -163,7 +163,7 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 下图为“minf”部分字节实例，其中红色为box header，蓝色为“smhd”，绿色为“dinf”，黄色为一部分“stbl”。
 
-![Alt text](image-14.png)
+![Alt text ](img/image-14.png)
 **4.2.2.3.1 Media Information Header Box（vmhd、smhd、hmhd、nmhd）**
 
 **Video Media Header Box（vmhd）**
@@ -215,12 +215,12 @@ size后面紧跟的32位为box type，一般是4个字符，如“ftyp”、“m
 
 下面是一个“dinf”的字节实例图。其中黄色为“dinf”的box header，由红色部分我们知道包含的“url”或“urn”个数为1，红色后面为“url”box的内容。紫色为“url”的box header（根据box type我们知道是个“url”），绿色为box flag，值为1，说明“url”中的字符串为空，表示track数据已包含在文件中。
 
-![Alt text](image-15.png)
+![Alt text ](img/image-15.png)
 4.2.2.3.3 Sample Table Box（stbl）
 
 “stbl”几乎是普通的MP4文件中最复杂的一个box了，首先需要回忆一下sample的概念。sample是媒体数据存储的单位，存储在media的chunk中，chunk和sample的长度均可互不相同，如下图所示。
 
-![Alt text](image-16.png)
+![Alt text ](img/image-16.png)
 “stbl”包含了关于track中sample所有时间和位置的信息，以及sample的编解码等信息。利用这个表，可以解释sample的时序、类型、大小以及在各自存储容器中的位置。“stbl”是一个container box，其子box包括：sample description box（stsd）、time to sample box（stts）、sample size box（stsz或stz2）、sample to chunk box（stsc）、chunk offset box（stco或co64）、composition time to sample box（ctts）、sync sample box（stss）等。
 
 “stsd”必不可少，且至少包含一个条目，该box包含了data reference box进行sample数据检索的信息。没有“stsd”就无法计算media sample的存储位置。“stsd”包含了编码的信息，其存储的信息随媒体类型不同而不同。
@@ -261,6 +261,6 @@ box header和version字段后会有一个entry count字段，根据entry的个�
 
 普通MP4文件的结构就讲完了，可能会比较乱，下面这张图是常见的box的树结构图，可以用来大致了解MP4文件的构造。
 
-![Alt text](image-17.png)
+![Alt text ](img/image-17.png)
 
-这篇文章主要面向一些对MP4文件结构没有太多了解的初学者，算是篇比较初级的文章，本人也是参考了一些资料写出来的，对于MP4文件中涉及的一些概念没有太深入的了解，因此其中应该是有一些错误理解，希望大家抱着批判的眼光读这篇文章。如果有错误的地方，还请大家不吝赐教。该文主要参考了标准和网友wqyuwss的blog系列文章：[mp4文件格式](http://www.52rd.com/blog/Blog.asp?Name=wqyuwss&Subjectid=559)
+这篇文章主要面向一些对MP4文件结构没有太多了解的初学者，算是篇比较初级的文章，本人也是参考了一些资料写出来的，对于MP4文件中涉及的一些概念没有太深入的了解，因此其中应该是有一些错误理解，希望大家抱着批判的眼光读这篇文章。如果有错误的地方，还请大家不吝赐教。该文主要参考了标准和网友wqyuwss的blog系列文章：[mp4文件格式 ](http://www.52rd.com/blog/Blog.asp?Name=wqyuwss&Subjectid=559)
